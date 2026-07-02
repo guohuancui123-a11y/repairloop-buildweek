@@ -1,3 +1,5 @@
+> Original project: **Lobster** / **Lobster AI System** — local-first Python runtime repair.
+
 # Lobster
 
 ## Run broken Python code → it fixes itself.
@@ -269,6 +271,18 @@ Lobster is a repair assistant, not a magic autopilot.
 `v0.1.0` is the first public prototype: small, local, rule-driven, and test-covered.
 
 It is ready for early users, demos, and source review. The next milestone is broader repair coverage and better patch preview/rollback UX.
+
+## Origin
+
+This project was originally created as **Lobster AI System**.
+
+Official short name: **Lobster**
+
+Original repository: `https://github.com/guohuancui123-a11y/lobster-ai-system`
+
+Author: **guohuancui123-a11y**
+
+Lobster is open source under the MIT License. Forks, modifications, demos, and experiments are welcome. If you fork or modify this project, please retain attribution to the original project and repository so users can trace the work back to its source.
 
 ## License
 
