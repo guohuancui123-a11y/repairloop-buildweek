@@ -14,23 +14,9 @@ Lobster is a local-first repair loop for Python runtime failures. It runs your c
 
 ## 10-Second Demo
 
-```text
-[RUN]
-python app.py
+![Lobster 10-second demo](docs/assets/lobster-demo.gif)
 
-[ERROR]
-ModuleNotFoundError: No module named 'flask'
-
-[FIX]
-installing missing dependency...
-python -m pip install flask
-
-[RETRY]
-python app.py
-
-[SUCCESS]
-✅ fixed
-```
+Watch the MP4 version: [docs/assets/lobster-demo.mp4](docs/assets/lobster-demo.mp4)
 
 That is the whole idea: **run the broken thing, repair the real failure, verify the result.**
 
