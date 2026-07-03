@@ -16,6 +16,14 @@ def test_classify_syntax_error():
     assert classify_error("SyntaxError: invalid syntax") == ErrorKind.SYNTAX_ERROR
 
 
+def test_command_start_error_gives_cli_guidance():
+    suggestion = suggest_fix("Could not start command: [WinError 2] system cannot find the file")
+
+    assert suggestion.kind == ErrorKind.COMMAND_START_ERROR
+    assert "could not be started" in suggestion.summary
+    assert any("PATH" in note for note in suggestion.notes)
+
+
 def test_classify_file_not_found():
     assert classify_error("FileNotFoundError: [Errno 2] No such file or directory: 'config.json'") == ErrorKind.FILE_NOT_FOUND
 

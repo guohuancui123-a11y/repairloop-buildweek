@@ -44,12 +44,20 @@ def blocking_error_context(result: RunResult) -> str | None:
 
 
 def run_command(command: Sequence[str]) -> RunResult:
-    completed = subprocess.run(
-        list(command),
-        text=True,
-        capture_output=True,
-        check=False,
-    )
+    try:
+        completed = subprocess.run(
+            list(command),
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+    except OSError as error:
+        return RunResult(
+            command=list(command),
+            returncode=127,
+            stdout="",
+            stderr=f"Could not start command: {error}",
+        )
     return RunResult(
         command=list(command),
         returncode=completed.returncode,
@@ -82,6 +90,8 @@ def print_apply_result(result: ApplyResult) -> None:
         print("\n[APPLY]")
     print("[APPLY] attempted:", result.attempted)
     print("[APPLY] ok:", result.ok)
+    if not result.attempted and result.reason and "apply disabled" in result.reason:
+        print("[PREVIEW] no changes were made; rerun with --apply to execute this fix")
     if result.reason:
         print("[APPLY] reason:", result.reason)
     if result.stdout:
@@ -138,7 +148,8 @@ def normalize_target(raw_target: Sequence[str], parser: argparse.ArgumentParser,
 
 def repair_loop(target: Sequence[str], *, apply: bool, max_iterations: int) -> int:
     if max_iterations < 1:
-        raise ValueError("max_iterations must be at least 1")
+        print("[ERROR] --max-iterations must be at least 1", file=sys.stderr)
+        return 2
 
     last_result: RunResult | None = None
     for iteration in range(1, max_iterations + 1):
@@ -155,7 +166,10 @@ def repair_loop(target: Sequence[str], *, apply: bool, max_iterations: int) -> i
         apply_result = apply_suggestion(suggestion, enabled=apply)
         print_apply_result(apply_result)
         if not apply_result.ok:
-            print("\n[VERIFY] not rerun; apply step did not complete")
+            if not apply and not apply_result.attempted:
+                print("\n[VERIFY] not rerun; preview mode only")
+            else:
+                print("\n[VERIFY] not rerun; apply step did not complete")
             return result.returncode
 
     print("\n[VERIFY] failed; iteration limit reached")

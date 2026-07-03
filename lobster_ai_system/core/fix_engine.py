@@ -7,6 +7,7 @@ from pathlib import Path
 
 
 class ErrorKind(StrEnum):
+    COMMAND_START_ERROR = "command_start_error"
     MODULE_NOT_FOUND = "module_not_found"
     IMPORT_ERROR = "import_error"
     SYNTAX_ERROR = "syntax_error"
@@ -34,6 +35,8 @@ _SYNTAX_LOCATION_RE = re.compile(r'File "([^"]+)", line (\d+)')
 def classify_error(error: str | None) -> ErrorKind:
     if not error:
         return ErrorKind.UNKNOWN
+    if "Could not start command:" in error:
+        return ErrorKind.COMMAND_START_ERROR
     if _MODULE_RE.search(error):
         return ErrorKind.MODULE_NOT_FOUND
     if _IMPORT_RE.search(error):
@@ -68,6 +71,16 @@ def _requirement_for_module(module: str) -> str | None:
 
 def suggest_fix(error: str | None) -> FixSuggestion:
     kind = classify_error(error)
+    if kind == ErrorKind.COMMAND_START_ERROR:
+        return FixSuggestion(
+            kind=kind,
+            summary="The target command could not be started.",
+            commands=[],
+            notes=[
+                "Check that the command is installed and available on PATH.",
+                "If the command has arguments, put -- before it, for example: lobster-ai run -- python app.py.",
+            ],
+        )
     if kind == ErrorKind.MODULE_NOT_FOUND:
         match = _MODULE_RE.search(error or "")
         module = match.group(1) if match else "<module>"

@@ -37,7 +37,10 @@ python -m lobster_ai_system repair -- python demo/missing_file.py
 [FIX] actions:
   - create_path:demo\\generated\\config.txt
 
+[PREVIEW] no changes were made; rerun with --apply to execute this fix
 [APPLY] reason: apply disabled; rerun with --apply to execute safe fix commands
+
+[VERIFY] not rerun; preview mode only
 ```
 
 Then let it repair and verify:
@@ -222,7 +225,7 @@ python -m pytest -q
 Current validation:
 
 ```text
-19 passed
+23 passed
 ```
 
 Check the installed CLI:
