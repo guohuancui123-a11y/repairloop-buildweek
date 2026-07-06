@@ -9,6 +9,7 @@ from typing import Sequence
 
 from .core.apply_engine import ApplyResult, apply_suggestion
 from .core.fix_engine import FixSuggestion, suggest_fix
+from .metadata import ATTRIBUTION, PROJECT_NAME, PROJECT_URL
 
 
 @dataclass(slots=True)
@@ -103,7 +104,12 @@ def print_apply_result(result: ApplyResult) -> None:
         print(result.stderr.rstrip())
 
 
+def print_attribution() -> None:
+    print("[SOURCE]", ATTRIBUTION)
+
+
 def print_result(result: RunResult) -> None:
+    print_attribution()
     print("[RUN]", " ".join(result.command))
     print("[EXIT]", result.returncode)
     if result.stdout:
@@ -124,6 +130,11 @@ def result_payload(result: RunResult) -> dict[str, object]:
     error = first_blocking_error(result)
     suggestion = suggest_fix(blocking_error_context(result)) if not result.ok else None
     return {
+        "tool": {
+            "name": PROJECT_NAME,
+            "url": PROJECT_URL,
+            "attribution": ATTRIBUTION,
+        },
         "command": result.command,
         "returncode": result.returncode,
         "ok": result.ok,
@@ -205,6 +216,7 @@ def repair_loop(target: Sequence[str], *, apply: bool, max_iterations: int, json
                 print(json.dumps({"ok": True, "verified": True, "iterations": iterations}, indent=2))
             else:
                 print("\n[VERIFY] success")
+                print_attribution()
             return 0
 
         error = blocking_error_context(result)

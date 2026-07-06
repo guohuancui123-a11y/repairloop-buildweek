@@ -1,0 +1,35 @@
+# NOTICE
+
+Lobster AI System
+
+Original project: https://github.com/guohuancui123-a11y/lobster-ai-system
+Original creator / maintainer: guohuancui123-a11y
+
+Lobster AI System is distributed under the MIT License. The MIT License allows copying, modification, redistribution, sublicensing, and commercial use, but it requires that the copyright notice and permission notice remain included in copies or substantial portions of the software.
+
+## Attribution Request
+
+If you fork, redistribute, publish screenshots, write tutorials, create demos, package binaries, or build a derivative product from Lobster AI System, please keep visible attribution to the original project:
+
+Built with Lobster AI System
+https://github.com/guohuancui123-a11y/lobster-ai-system
+
+Recommended README line:
+
+Based on Lobster AI System, originally created by guohuancui123-a11y.
+Original repository: https://github.com/guohuancui123-a11y/lobster-ai-system
+
+## Brand and Identity
+
+The names "Lobster" and "Lobster AI System" identify the original project. Forks are welcome, but derivative projects should not present themselves as the original upstream project or remove upstream attribution in a misleading way.
+
+If you make a fork with substantial changes, use a derivative name that keeps the origin clear, for example:
+
+- Lobster Fork
+- Lobster Experimental
+- Lobster Runtime Repair Lab
+- <YourName>'s Lobster Build
+
+## Reports and Generated Output
+
+Lobster may include source attribution in human-readable output and machine-readable JSON reports. Please do not remove this attribution from redistributed demos, logs, reports, screenshots, or hosted wrappers unless you are only using the tool privately.

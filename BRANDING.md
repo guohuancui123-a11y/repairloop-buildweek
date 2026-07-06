@@ -73,3 +73,25 @@ If a fork needs a custom name, prefer a derivative form that keeps the origin vi
 You may fork, modify, publish, and experiment with this project under the MIT License.
 
 Please keep a visible attribution link to the original Lobster AI System repository in your README, documentation, or release notes.
+
+## Attribution Surfaces
+
+When publishing derivative work, keep attribution visible in at least one user-facing place and one repository/package place.
+
+Recommended user-facing surfaces:
+
+- CLI output or `--version` output
+- JSON or HTML reports
+- Demo screenshots and videos
+- Hosted web wrappers
+- Documentation and tutorials
+
+Recommended repository/package surfaces:
+
+- README
+- NOTICE
+- CITATION.cff
+- Release notes
+- Package metadata
+
+Do not remove the upstream attribution from generated reports or demos that are shared publicly. Private local use is fine; public redistribution should keep the source traceable.

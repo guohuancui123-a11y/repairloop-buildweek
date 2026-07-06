@@ -60,6 +60,17 @@ def test_run_json_report_outputs_machine_readable_payload(capsys):
     assert payload["ok"] is True
     assert payload["returncode"] == 0
     assert payload["stdout"].strip() == "json-ok"
+    assert payload["tool"]["name"] == "Lobster AI System"
+    assert "github.com/guohuancui123-a11y/lobster-ai-system" in payload["tool"]["url"]
+
+
+def test_human_output_includes_source_attribution(capsys):
+    code = main(["run", "--", "python", "-c", "print('source-ok')"])
+
+    captured = capsys.readouterr()
+    assert code == 0
+    assert "[SOURCE] Built with Lobster AI System" in captured.out
+    assert "github.com/guohuancui123-a11y/lobster-ai-system" in captured.out
 
 
 def test_repair_json_report_preview_is_machine_readable(capsys):

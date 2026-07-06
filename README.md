@@ -344,6 +344,23 @@ Author: **guohuancui123-a11y**
 
 Lobster is open source under the MIT License. Forks, modifications, demos, and experiments are welcome. If you fork or modify this project, please retain attribution to the original project and repository so users can trace the work back to its source.
 
+## Attribution and Fair Use
+
+Lobster is intentionally open source, but it is not anonymous raw material. If this project saves you time, please help the original project stay discoverable:
+
+- Star the original repository if you use or clone it seriously.
+- Keep the upstream link in forks, demos, tutorials, binary packages, screenshots, generated reports, and hosted wrappers.
+- Do not remove the Lobster identity and present a lightly modified copy as an unrelated original project.
+- Use `NOTICE`, `CITATION.cff`, and `BRANDING.md` when publishing derivative work.
+
+Human-readable CLI output and JSON reports include a source attribution field so logs, demos, and automation artifacts can trace back to the original repository.
+
+Recommended attribution line:
+
+```text
+Built with Lobster AI System (https://github.com/guohuancui123-a11y/lobster-ai-system)
+```
+
 ## License
 
 MIT
