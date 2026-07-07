@@ -1,0 +1,44 @@
+name: Bug report
+description: Report a RepairLoop failure or incorrect repair
+title: "Bug: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: command
+    attributes:
+      label: Failing command
+      description: What command did you run?
+      placeholder: python demo/missing_file.py
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Error output
+      description: Paste the relevant stdout/stderr or traceback.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: repairloop-output
+    attributes:
+      label: RepairLoop output
+      description: Paste the output from `repair-loop repair -- <command>`.
+      render: text
+    validations:
+      required: false
+  - type: input
+    id: version
+    attributes:
+      label: RepairLoop version / commit
+      placeholder: v0.2.0 or commit SHA
+    validations:
+      required: false
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, shell, and any relevant package versions.
+      placeholder: Windows 11, Python 3.12, PowerShell
+    validations:
+      required: false

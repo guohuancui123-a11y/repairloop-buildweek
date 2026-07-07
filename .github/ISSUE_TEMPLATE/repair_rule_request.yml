@@ -1,0 +1,36 @@
+name: Repair rule request
+description: Suggest a runtime failure that RepairLoop should learn to repair
+title: "Repair rule: "
+labels: ["enhancement", "repair-rule"]
+body:
+  - type: textarea
+    id: failure
+    attributes:
+      label: Runtime failure
+      description: What error should RepairLoop recognize?
+      placeholder: ModuleNotFoundError, FileNotFoundError, database startup failure, etc.
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Reproduction command
+      description: What command produces the failure?
+      placeholder: python app.py
+    validations:
+      required: false
+  - type: textarea
+    id: expected-repair
+    attributes:
+      label: Expected minimal repair
+      description: What small, safe action should RepairLoop suggest or apply?
+      placeholder: Create a missing directory, add a missing file, install a dependency from requirements.txt, etc.
+    validations:
+      required: true
+  - type: textarea
+    id: safety
+    attributes:
+      label: Safety considerations
+      description: Why is this repair narrow, local, and safe to apply only after `--apply`?
+    validations:
+      required: false
