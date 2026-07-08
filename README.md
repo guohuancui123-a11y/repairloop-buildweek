@@ -1,5 +1,3 @@
-> Original project: **RepairLoop** / **RepairLoop** — local-first Python runtime repair.
-
 # RepairLoop
 
 RepairLoop is the original local-first Python runtime repair engine created and maintained by [guohuancui123-a11y](https://github.com/guohuancui123-a11y).

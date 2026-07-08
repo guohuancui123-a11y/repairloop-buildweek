@@ -8,4 +8,4 @@ repository-code: "https://github.com/guohuancui123-a11y/repairloop"
 url: "https://github.com/guohuancui123-a11y/repairloop"
 abstract: "Local-first automatic code repair tool for Python runtime errors."
 license: MIT
-version: 0.1.2
+version: 0.2.0
