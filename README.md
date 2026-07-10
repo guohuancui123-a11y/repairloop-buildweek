@@ -1,5 +1,10 @@
 # RepairLoop
 
+[![PyPI version](https://img.shields.io/pypi/v/repairloop.svg)](https://pypi.org/project/repairloop/)
+[![Python versions](https://img.shields.io/pypi/pyversions/repairloop.svg)](https://pypi.org/project/repairloop/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![CI](https://github.com/guohuancui123-a11y/repairloop/actions/workflows/ci.yml/badge.svg)](https://github.com/guohuancui123-a11y/repairloop/actions/workflows/ci.yml)
+
 RepairLoop is the original local-first Python runtime repair engine created and maintained by [guohuancui123-a11y](https://github.com/guohuancui123-a11y).
 
 Copyright (c) 2026 Guohuancui.
@@ -99,6 +104,20 @@ It is a deterministic repair loop for Python runtime failures:
 If this saves you time, a GitHub star helps the project reach more builders.
 
 ## Install
+
+Install from PyPI:
+
+```powershell
+python -m pip install repairloop
+```
+
+Then run:
+
+```powershell
+repair-loop repair -- python demo/missing_file.py
+```
+
+For development from a local checkout:
 
 ```powershell
 git clone https://github.com/guohuancui123-a11y/repairloop.git
@@ -305,9 +324,9 @@ RepairLoop is a repair assistant, not a magic autopilot.
 
 ## Status
 
-`v0.1.0` is the first public prototype: small, local, rule-driven, and test-covered.
+`v0.2.0` is the first public PyPI release under the RepairLoop name.
 
-It is ready for early users, demos, and source review. The next milestone is broader repair coverage and better patch preview/rollback UX.
+It is installable with `pip install repairloop` and ready for early users, demos, source review, and integration experiments. The next milestone is broader repair coverage and better patch preview/rollback UX.
 
 ## Origin
 

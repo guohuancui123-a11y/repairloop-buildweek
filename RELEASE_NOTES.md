@@ -1,5 +1,32 @@
 # Release Notes Draft
 
+## v0.2.0 - First Public PyPI Release
+
+RepairLoop is now published on PyPI as `repairloop`.
+
+### Highlights
+
+- Published installable packages to PyPI.
+- Added `repair-loop` as the console command for normal installs.
+- Confirmed `pip install repairloop==0.2.0` works from a clean environment.
+- Updated public project positioning under the RepairLoop name.
+- Added technical overview and benchmark planning docs.
+
+### Install
+
+```powershell
+python -m pip install repairloop
+```
+
+### Verified
+
+```text
+python -m build
+twine check dist/*
+pip install repairloop==0.2.0
+repair-loop --help
+```
+
 ## v0.1.2 - JSON Reports for Automation
 
 This release makes RepairLoop easier to use from CI, scripts, and other agent runtimes by adding structured JSON output.
