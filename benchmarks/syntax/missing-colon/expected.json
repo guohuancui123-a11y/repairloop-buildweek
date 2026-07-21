@@ -1,0 +1,5 @@
+{
+  "case": "syntax/missing-colon",
+  "expected_error_kind": "syntax_error",
+  "expected_verified": true
+}

@@ -10,6 +10,7 @@ from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 from typing import Sequence
 
+from .benchmark import run_benchmarks
 from .core.apply_engine import ApplyResult, apply_suggestion
 from .core.fix_engine import FixSuggestion, suggest_fix
 from .metadata import ATTRIBUTION, PROJECT_NAME, PROJECT_URL
@@ -203,6 +204,18 @@ def build_parser() -> argparse.ArgumentParser:
     repair_parser.add_argument("--max-iterations", type=int, default=2, help="Maximum repair iterations.")
     repair_parser.add_argument("target", nargs=argparse.REMAINDER, help="Command to execute. Use -- before the target command.")
 
+    benchmark_parser = subparsers.add_parser(
+        "benchmark",
+        help="Run isolated repair benchmarks and report verified recovery metrics.",
+    )
+    benchmark_parser.add_argument(
+        "--cases-dir",
+        type=Path,
+        default=Path("benchmarks"),
+        help="Directory containing benchmark case manifests (default: benchmarks).",
+    )
+    benchmark_parser.add_argument("--json-report", action="store_true", help="Print a machine-readable benchmark report.")
+
     return parser
 
 
@@ -298,6 +311,29 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.command_name == "repair":
         target = normalize_target(args.target, parser, "repair")
         return repair_loop(target, apply=args.apply, max_iterations=args.max_iterations, json_report=args.json_report)
+
+    if args.command_name == "benchmark":
+        try:
+            report = run_benchmarks(args.cases_dir)
+        except ValueError as error:
+            if args.json_report:
+                print(json.dumps({"ok": False, "error": str(error)}, indent=2))
+            else:
+                print(f"[ERROR] {error}", file=sys.stderr)
+            return 2
+        if args.json_report:
+            print(json.dumps(report, indent=2))
+        else:
+            summary = report["summary"]
+            for case in report["cases"]:
+                status = "PASS" if case["passed"] else "FAIL"
+                print(f"[BENCHMARK] {status} {case['case']} ({case['repair_time_ms']} ms)")
+            print(
+                "[BENCHMARK] "
+                f"passed={summary['passed']}/{summary['total']} "
+                f"verified={summary['verified']} failed={summary['failed']}"
+            )
+        return 0 if report["summary"]["failed"] == 0 else 1
 
     parser.print_help()
     return 0

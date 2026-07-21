@@ -89,7 +89,25 @@ That makes it useful as a local developer tool, a CI primitive, or a repair laye
 
 For a deeper design overview, see [docs/technical-overview.md](docs/technical-overview.md).
 
-For the planned execution-recovery benchmark, see [docs/benchmark-plan.md](docs/benchmark-plan.md).
+## Verified Repair Benchmarks
+
+RepairLoop now includes a local, isolated benchmark runner. Each case starts from a copied failing project, applies only an existing safe repair rule, reruns the original command, and emits a versioned JSON report with verification and patch-size metrics.
+
+Run the seed suite:
+
+```powershell
+python -m repair_loop benchmark --json-report
+```
+
+The initial suite contains three deterministic, no-network cases:
+
+- missing local configuration file;
+- missing Python syntax colon;
+- missing SQLite `users` table.
+
+A successful report records `passed: 3`, `verified: 3`, timing for each recovery, and the created or modified files. The source fixtures remain unchanged because every run executes inside a temporary copy.
+
+For benchmark design and case conventions, see [docs/benchmark-plan.md](docs/benchmark-plan.md).
 
 ## What It Is
 
@@ -285,8 +303,10 @@ repairloop/
 │   │   └── __init__.py
 │   ├── ai/
 │   │   └── __init__.py
+│   ├── benchmark.py
 │   ├── cli.py
 │   └── __main__.py
+├── benchmarks/
 ├── demo/
 ├── tests/
 ├── .github/workflows/ci.yml

@@ -1,0 +1,1 @@
+# Keep the data directory present so this benchmark isolates the missing-table rule.

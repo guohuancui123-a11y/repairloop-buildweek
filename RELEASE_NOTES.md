@@ -1,5 +1,24 @@
 # Release Notes Draft
 
+## Unreleased - Verified Repair Benchmark Framework
+
+### Highlights
+
+- Added `repair-loop benchmark` for isolated, local-only recovery benchmarks.
+- Added three deterministic benchmark fixtures for missing files, missing syntax colons, and missing SQLite `users` tables.
+- Added versioned aggregate JSON reports with per-case verification, timing, expected/observed repair kinds, and file-level patch metrics.
+- Fixed `python -m repair_loop` to propagate the target command's exit status.
+- Preserved existing `run`, `repair`, and JSON-report behavior.
+
+### Verified
+
+```text
+python -m pytest -q
+33 passed
+python -m repair_loop benchmark --json-report
+3/3 passed, 3/3 verified
+```
+
 ## v0.2.0 - First Public PyPI Release
 
 RepairLoop is now published on PyPI as `repairloop`.

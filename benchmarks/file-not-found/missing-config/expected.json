@@ -1,0 +1,5 @@
+{
+  "case": "file-not-found/missing-config",
+  "expected_error_kind": "file_not_found",
+  "expected_verified": true
+}

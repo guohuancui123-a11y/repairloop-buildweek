@@ -100,30 +100,32 @@ Benchmark runs should eventually emit JSON:
 }
 ```
 
-## Phases
+## Benchmark MVP (implemented)
 
-### Phase 1: Manual Case Library
+The initial benchmark runner is available through:
 
-Create small, inspectable failure cases for each supported repair rule.
+```powershell
+python -m repair_loop benchmark --json-report
+```
 
-### Phase 2: Automated Benchmark Runner
+The runner discovers every `expected.json` manifest under `benchmarks/`, copies that case's `before/` directory into an isolated temporary workspace, executes RepairLoop with `--apply --json-report`, reruns the original target, and compares the observed repair kind and verification result with the manifest.
 
-Add a benchmark runner that executes each case in an isolated temporary directory.
+The first release includes three deterministic, local-only cases:
 
-### Phase 3: Public Results
+- `file-not-found/missing-config`
+- `syntax/missing-colon`
+- `sqlite/missing-users-table`
 
-Publish benchmark results in the repository and release notes.
+Each case contains the documented `before/`, `command.txt`, `expected_error.txt`, `expected_repair.md`, and `README.md` files, plus `expected.json` as a machine-readable assertion manifest.
 
-### Phase 4: Research Direction
+The aggregate report uses `schema_version: "1.0"` and records per-case status, expected versus observed error kinds, verified recovery, elapsed repair time, and a file-level patch-size summary. Source fixtures are never modified.
 
-Use benchmark data to evaluate Runtime Repair Loop behavior across broader software reliability tasks.
+## Next phases
 
-Potential long-term directions:
-
-- autonomous software maintenance
-- runtime self-healing systems
-- CI repair primitives
-- software reliability agents
+- Add more deterministic rules and explicitly unsafe/unknown cases to measure false-repair behavior.
+- Add a stable public JSON Schema document once external consumers depend on the report format.
+- Publish versioned benchmark result snapshots with releases.
+- Consider CI reporting only after the contract has matured; benchmarks must remain local-only and safe by default.
 
 ## Principles
 

@@ -1,0 +1,5 @@
+{
+  "case": "sqlite/missing-users-table",
+  "expected_error_kind": "sqlite_missing_table",
+  "expected_verified": true
+}
