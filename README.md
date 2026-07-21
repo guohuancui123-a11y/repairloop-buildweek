@@ -29,7 +29,9 @@ Watch the MP4 version: [docs/assets/repairloop-demo.mp4](docs/assets/repairloop-
 
 Vertical demo for social posts: [docs/assets/repairloop-demo-vertical.mp4](docs/assets/repairloop-demo-vertical.mp4)
 
-Social preview image: [docs/assets/repairloop-social-preview.png](docs/assets/repairloop-social-preview.png)
+Build Week judge demo (90 seconds): [docs/assets/repairloop-buildweek-judge-demo-90s.mp4](docs/assets/repairloop-buildweek-judge-demo-90s.mp4)
+
+Judge-facing GPT-5.6 contribution notes: [docs/JUDGE_NOTES_GPT56.md](docs/JUDGE_NOTES_GPT56.md)
 
 In 34 seconds, the demo shows the full RepairLoop story: **a real Python crash, a dry-run repair preview, an explicit apply step, verification by rerunning the original command, and the new isolated benchmark results.**
 
