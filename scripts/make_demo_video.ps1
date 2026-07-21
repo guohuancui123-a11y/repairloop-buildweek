@@ -124,7 +124,7 @@ $scenes = @(
     @{
         Duration = 4
         Step = 0
-        Badge = "30-second demo"
+        Badge = "34-second demo"
         Title = "A Python app breaks at runtime"
         Subtitle = "RepairLoop does not guess from a prompt. It starts from the real crash."
         Note = "Real stderr becomes the repair input."
@@ -209,6 +209,21 @@ $scenes = @(
             @{ Text = '  "suggestion": "file_not_found" }'; Color = $muted; Small = $true },
             @{ Text = "CI can inspect the result"; Color = $green },
             @{ Text = "Agents can use it as a repair primitive"; Color = $green; Small = $true }
+        )
+    },
+    @{
+        Duration = 4
+        Step = 3
+        Badge = "verified benchmarks"
+        Title = "Measure verified recovery"
+        Subtitle = "Isolated cases. Same command rerun."
+        Note = "3/3 passed • 3/3 verified"
+        Lines = @(
+            @{ Text = "> repair-loop benchmark --json-report"; Color = $blue; Small = $true },
+            @{ Text = 'schema_version: "1.0"'; Color = $muted; Small = $true },
+            @{ Text = "file_not_found       PASS"; Color = $green },
+            @{ Text = "syntax_error         PASS"; Color = $green },
+            @{ Text = "sqlite_missing_table PASS"; Color = $green }
         )
     },
     @{
