@@ -30,13 +30,13 @@ $yellow = [System.Drawing.Color]::FromArgb(210, 153, 34)
 $orange = [System.Drawing.Color]::FromArgb(255, 107, 74)
 $purple = [System.Drawing.Color]::FromArgb(188, 140, 255)
 
-$brandFont = New-Object System.Drawing.Font("Segoe UI", 40, [System.Drawing.FontStyle]::Bold)
-$titleFont = New-Object System.Drawing.Font("Segoe UI", 34, [System.Drawing.FontStyle]::Bold)
-$subtitleFont = New-Object System.Drawing.Font("Segoe UI", 21, [System.Drawing.FontStyle]::Regular)
-$smallFont = New-Object System.Drawing.Font("Segoe UI", 18, [System.Drawing.FontStyle]::Regular)
-$footerFont = New-Object System.Drawing.Font("Segoe UI", 20, [System.Drawing.FontStyle]::Regular)
-$monoFont = New-Object System.Drawing.Font("Consolas", 24, [System.Drawing.FontStyle]::Regular)
-$monoSmallFont = New-Object System.Drawing.Font("Consolas", 20, [System.Drawing.FontStyle]::Regular)
+$brandFont = New-Object System.Drawing.Font("Segoe UI", 28, [System.Drawing.FontStyle]::Bold)
+$titleFont = New-Object System.Drawing.Font("Segoe UI", 28, [System.Drawing.FontStyle]::Bold)
+$subtitleFont = New-Object System.Drawing.Font("Segoe UI", 17, [System.Drawing.FontStyle]::Regular)
+$smallFont = New-Object System.Drawing.Font("Segoe UI", 15, [System.Drawing.FontStyle]::Regular)
+$footerFont = New-Object System.Drawing.Font("Segoe UI", 16, [System.Drawing.FontStyle]::Regular)
+$monoFont = New-Object System.Drawing.Font("Consolas", 21, [System.Drawing.FontStyle]::Regular)
+$monoSmallFont = New-Object System.Drawing.Font("Consolas", 17, [System.Drawing.FontStyle]::Regular)
 
 function New-Brush($color) {
     return New-Object System.Drawing.SolidBrush($color)
@@ -59,13 +59,13 @@ function Draw-Terminal($graphics, $x, $y, $w, $h, $lines) {
     $graphics.FillEllipse((New-Brush $red), $x + 28, $y + 24, 14, 14)
     $graphics.FillEllipse((New-Brush $yellow), $x + 52, $y + 24, 14, 14)
     $graphics.FillEllipse((New-Brush $green), $x + 76, $y + 24, 14, 14)
-    $graphics.DrawString("terminal", $smallFont, (New-Brush $muted), $x + $w - 105, $y + 15)
+    $graphics.DrawString("terminal", $smallFont, (New-Brush $muted), $x + $w - 88, $y + 14)
 
-    $lineY = $y + 72
+    $lineY = $y + 58
     foreach ($line in $lines) {
         $font = if ($line.Small) { $monoSmallFont } else { $monoFont }
         $graphics.DrawString($line.Text, $font, (New-Brush $line.Color), $x + 34, $lineY)
-        $lineY += if ($line.Small) { 35 } else { 42 }
+        $lineY += if ($line.Small) { 30 } else { 36 }
     }
 }
 
@@ -74,12 +74,12 @@ function Draw-StepPills($graphics, $activeIndex) {
     $x = 90
     for ($i = 0; $i -lt $labels.Count; $i++) {
         $color = if ($i -le $activeIndex) { $green } else { $border }
-        Draw-RoundRect $graphics (New-Brush ([System.Drawing.Color]::FromArgb(35, $color.R, $color.G, $color.B))) (New-Object System.Drawing.Pen($color, 2)) $x 624 150 42 20
-        $graphics.DrawString($labels[$i], $footerFont, (New-Brush $(if ($i -le $activeIndex) { $text } else { $muted })), $x + 39, 631)
+        Draw-RoundRect $graphics (New-Brush ([System.Drawing.Color]::FromArgb(35, $color.R, $color.G, $color.B))) (New-Object System.Drawing.Pen($color, 2)) $x 570 130 36 18
+        $graphics.DrawString($labels[$i], $footerFont, (New-Brush $(if ($i -le $activeIndex) { $text } else { $muted })), $x + 30, 576)
         if ($i -lt $labels.Count - 1) {
-            $graphics.DrawString("→", $footerFont, (New-Brush $muted), $x + 164, 631)
+            $graphics.DrawString("→", $footerFont, (New-Brush $muted), $x + 140, 576)
         }
-        $x += 220
+        $x += 180
     }
 }
 
@@ -94,24 +94,30 @@ function Save-Frame($index, $scene) {
     $graphics.FillEllipse((New-Brush ([System.Drawing.Color]::FromArgb(22, 88, 166, 255))), 965, 450, 440, 440)
     $graphics.FillEllipse((New-Brush ([System.Drawing.Color]::FromArgb(16, 188, 140, 255))), 970, -170, 360, 360)
 
-    $graphics.DrawString("RepairLoop", $brandFont, (New-Brush $orange), 90, 42)
-    $graphics.DrawString($scene.Title, $titleFont, (New-Brush $text), 90, 105)
-    $graphics.DrawString($scene.Subtitle, $subtitleFont, (New-Brush $muted), 92, 152)
+    $graphics.DrawString("RepairLoop", $brandFont, (New-Brush $orange), 90, 28)
+    $graphics.DrawString($scene.Title, $titleFont, (New-Brush $text), 90, 94)
+    $subtitleRect = New-Object System.Drawing.RectangleF(92, 158, 820, 48)
+    $graphics.DrawString($scene.Subtitle, $subtitleFont, (New-Brush $muted), $subtitleRect)
 
     if ($scene.Badge) {
-        Draw-RoundRect $graphics (New-Brush ([System.Drawing.Color]::FromArgb(35, $blue.R, $blue.G, $blue.B))) (New-Object System.Drawing.Pen($blue, 2)) 930 48 250 44 20
-        $graphics.DrawString($scene.Badge, $smallFont, (New-Brush $text), 955, 57)
+        Draw-RoundRect $graphics (New-Brush ([System.Drawing.Color]::FromArgb(35, $blue.R, $blue.G, $blue.B))) (New-Object System.Drawing.Pen($blue, 2)) 900 44 280 40 18
+        $badgeRect = New-Object System.Drawing.RectangleF(900, 44, 280, 40)
+        $badgeFormat = New-Object System.Drawing.StringFormat
+        $badgeFormat.Alignment = [System.Drawing.StringAlignment]::Center
+        $badgeFormat.LineAlignment = [System.Drawing.StringAlignment]::Center
+        $graphics.DrawString($scene.Badge, $smallFont, (New-Brush $text), $badgeRect, $badgeFormat)
+        $badgeFormat.Dispose()
     }
 
-    Draw-Terminal $graphics 90 205 1100 380 $scene.Lines
+    Draw-Terminal $graphics 90 235 1100 285 $scene.Lines
 
     if ($scene.Note) {
-        Draw-RoundRect $graphics (New-Brush $panel2) (New-Object System.Drawing.Pen($border, 1)) 755 548 435 54 18
-        $graphics.DrawString($scene.Note, $smallFont, (New-Brush $muted), 778, 563)
+        Draw-RoundRect $graphics (New-Brush $panel2) (New-Object System.Drawing.Pen($border, 1)) 90 525 1100 34 14
+        $graphics.DrawString($scene.Note, $smallFont, (New-Brush $muted), 112, 533)
     }
 
     Draw-StepPills $graphics $scene.Step
-    $graphics.DrawString("Local-first • dry-run by default • no source upload", $footerFont, (New-Brush $muted), 90, 682)
+    $graphics.DrawString("Local-first • dry-run by default • no source upload", $footerFont, (New-Brush $muted), 90, 635)
 
     $path = Join-Path $frames ("frame_{0:D3}.png" -f $index)
     $bitmap.Save($path, [System.Drawing.Imaging.ImageFormat]::Png)
@@ -124,9 +130,9 @@ $scenes = @(
     @{
         Duration = 4
         Step = 0
-        Badge = "34-second demo"
-        Title = "A Python app breaks at runtime"
-        Subtitle = "RepairLoop does not guess from a prompt. It starts from the real crash."
+        Badge = "Build Week Demo"
+        Title = "A Python app fails at runtime"
+        Subtitle = "Start from real stderr, not a vague prompt."
         Note = "Real stderr becomes the repair input."
         Lines = @(
             @{ Text = "> python demo/missing_file.py"; Color = $blue },
@@ -140,8 +146,8 @@ $scenes = @(
         Duration = 4
         Step = 1
         Badge = "the usual pain"
-        Title = "The hard part is not seeing the error"
-        Subtitle = "The hard part is turning it into a safe, verifiable next action."
+        Title = "Errors are easy. Recovery is hard."
+        Subtitle = "Turn the crash into a safe, verifiable action."
         Note = "No full-project rewrite. No magic autopilot."
         Lines = @(
             @{ Text = "Problem:"; Color = $yellow },
@@ -155,8 +161,8 @@ $scenes = @(
         Duration = 4
         Step = 2
         Badge = "dry-run first"
-        Title = "Preview the repair before changing files"
-        Subtitle = "By default, RepairLoop explains what it would do and stops."
+        Title = "Preview before changing files"
+        Subtitle = "Dry-run shows the exact action first."
         Note = "Dry-run is the default safety gate."
         Lines = @(
             @{ Text = "> repair-loop repair -- python demo/missing_file.py"; Color = $blue; Small = $true },
@@ -170,8 +176,8 @@ $scenes = @(
         Duration = 4
         Step = 2
         Badge = "explicit apply"
-        Title = "Apply only the narrow local fix"
-        Subtitle = "When you approve, it performs the smallest repair it understands."
+        Title = "Apply one narrow local fix"
+        Subtitle = "Apply only after explicit approval."
         Note = "The original command is preserved for verification."
         Lines = @(
             @{ Text = "> repair-loop repair --apply -- python demo/missing_file.py"; Color = $blue; Small = $true },
@@ -186,7 +192,7 @@ $scenes = @(
         Step = 3
         Badge = "verified"
         Title = "Verification is the product"
-        Subtitle = "RepairLoop proves the fix by rerunning the same broken command."
+        Subtitle = "Rerun the original command to prove recovery."
         Note = "Success means the program runs again."
         Lines = @(
             @{ Text = "[RUN] python demo/missing_file.py"; Color = $blue },
@@ -200,8 +206,8 @@ $scenes = @(
         Duration = 4
         Step = 3
         Badge = "automation-ready"
-        Title = "Use it from terminals, CI, or agents"
-        Subtitle = "Human-readable logs for demos. JSON reports for automation."
+        Title = "Terminal, CI, or agent-ready"
+        Subtitle = "Human logs for demos. JSON for automation."
         Note = "Local-first core. Optional integrations later."
         Lines = @(
             @{ Text = "> repair-loop repair --json-report -- python app.py"; Color = $blue; Small = $true },
@@ -245,8 +251,8 @@ $scenes = @(
         Duration = 3
         Step = 3
         Badge = "open source"
-        Title = "RepairLoop answers one question"
-        Subtitle = "Can the broken Python command run again?"
+        Title = "One question: does it run again?"
+        Subtitle = "Success means the original command runs again."
         Note = "Star the repo if this saves you time."
         Lines = @(
             @{ Text = "BROKEN COMMAND"; Color = $red },
